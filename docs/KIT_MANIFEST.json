@@ -1,0 +1,23 @@
+{
+  "state": "Build kit and branding; application implementation/live evidence pending",
+  "files": {
+    "AGENTS.md": "2e3573b2af6701035b87bb4d99ef8606fad9d56a8466faefdc204412b2b66118",
+    "CODEX_BUILD_PROMPT.md": "b64cb13e83e917828bfb2473276ecaa482ca64b925a743c956675df96b1b1956",
+    "FREEBUFF_PROMPT.md": "1e32dcb4958c4d9480aa7da2e10ed09bf203846dc5f78bd1b6a2403ea18574bb",
+    "PROJECT_BUILD.md": "f8f10f576d6a503481599ddfb762bf4959bf53e5c8f98c9e59a8c4e67cc59f89",
+    "README.md": "30547d6f522eb2c8485a863c1f633b127c226b33879fe0e29a218aa5c4fd39f8",
+    "SESSION_CONTINUATION.md": "e60885100ce03c1e0896b7aef9573c2dc76da0eb1dff3038ce0546ba68868868",
+    "assets/rallyroom-icon.png": "50e67d28e45e37a16681654c05fc8cb4b22a0c39c5c4599109ea5fe12b748a51",
+    "assets/rallyroom-logo.png": "e9cbb8a75ac2fb739c8e711b6b72c0ab6842d6f6f03b2e16a367f6fad425bed5",
+    "docs/BRANDING.md": "c9312fab8066a02034fbab8ef956e46211fc5059da02ce13b334430a2e735ba9",
+    "docs/BUILT_WITH.md": "0a4ab65e12ca02c4740fe63f815a332022fc6cae2eb692858aad5dbb660ab88a",
+    "docs/CODEX_BUILD_LOG.md": "f1f9350e6332fd0d50f84d9c94cf231609d79327f973c298bd1b7cbeccf4d0c7",
+    "docs/COMPETITION_NOTES.md": "0bbcf500703447d30b37f119e3f6ff1ce9b4c87b6604354e9b53ce1a5bf84ad9",
+    "docs/DEVPOST_PROJECT_STORY.md": "54ea5b6b4de43eac8907f0b837763dc303018c47197c4ac24bf8d1ec2ecad23e",
+    "docs/MEDIA_WORKFLOWS.md": "7356995944b66ee9b7ca73f69850ab65ebd47e1d19833a27e8894164386bd293",
+    "docs/PORTAL_COPY.md": "3189c9ad373d4b40d6fdcecdc8deafac67203bd4b1a97e74ad1eb0b086ac662e",
+    "docs/PROGRESS.md": "ab45f2b4c82f897dcac645cb780ba078c130bfb2174ec30abd70df976dabb07f",
+    "docs/SESSION_TOOLING.md": "20f58ad2999b40c420d8f23a28b9c93971f3d2466085b5f4de0b2ac084e7989c",
+    "docs/SUBMISSION_CHECKLIST.md": "0923838edaf495a4cf0450b942cc8100123bb81284deb1925a6cd2148f2cc156"
+  }
+}

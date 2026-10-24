@@ -1,0 +1,2 @@
+# Built With
+Verified application tags: none. Planned candidates after actual use: codex, twitch, eventsub, typescript, node.js, react, vite, zod, obs, vitest, playwright. Maximum 25 honest tags. Add persistence/framework/library only after adoption. Codex is development tooling, not automatically runtime AI. No OpenAI API, CSCS, Qloo, ElevenLabs or Sites application claims without actual role. Media tools separately disclosed.

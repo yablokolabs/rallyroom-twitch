@@ -1,0 +1,2 @@
+# Branding provenance
+Generated with built-in imagegen. Original PNG logo/icon with opaque pale ivory backgrounds, not Twitch/OpenAI logos or game screenshots. Prompt concept: open navy room, three orange/gold/aqua pathways/figures converging on gold beacon/star; exact wordmark RallyRoom and tagline One chat. One mission. Icon uses logo as reference without lettering. No footer/attribution badges. Disclose generated art in asset notes, not as proof of live gameplay.
