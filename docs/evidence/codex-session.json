@@ -1,0 +1,10 @@
+{
+  "source": "Codex app-server thread/read (supported read-only interface)",
+  "threadId": "01a16f7e-4c97-70f1-81b9-46b2c4e2e308",
+  "sessionId": "01a16f7e-4c97-70f1-81b9-46b2c4e2e308",
+  "cwd": "/home/azureuser/rallyroom",
+  "status": {
+    "type": "notLoaded"
+  },
+  "error": null
+}
