@@ -65,3 +65,9 @@ Hindsight status at 2026-10-25T06:46:16.450427+00:00: sanitized milestone accept
 ## 2026-10-25T06:46:38.188596+00:00 · committed milestone
 
 Application/test/documentation verification commit: `be62390` on `main`. Earlier implementation `9bc5d93`; preserved supplied kit `7f46b84`. 76 tests / 3 browser scenarios / production build passed; architecture, labeled simulation artifacts and video opening included. Hindsight sanitized checkpoint completed. Remaining external work: own consenting Twitch OAuth/live round, actual OBS capture, actual main Codex `/status` recording, final reviewed <=3-minute demo and separately authorized upload/submission. See TWITCH_SETUP.md and DEMO.md.
+
+## 2026-10-25T10:50:14.703169+00:00 · authorized public repository publication
+
+User prompt: “push to github remote repo as public without footer attribution too, is the demo video ready too ?” Existing Git state clean at fed2ccd; no remote configured. Authenticated GitHub account yablokolabs; rallyroom-twitch name absent/available. Reviewed all four commits / 104 text blobs: only the known synthetic Playwright key matched the literal-key heuristic, no actual project-secret values or private tracked runtime paths. Authored UI/overlay/diagram/video sources contain no footer attribution. Repository creation/push target: https://github.com/yablokolabs/rallyroom-twitch. No runtime code changes; prior 76 tests / 3 browser checks / production build remain the validation record.
+
+Demo checked with ffprobe: opening only, 8.000 seconds / 1920×1080 / H.264. No final demo file or reviewed source manifest exists. Genuine Twitch/OBS/Codex captures remain pending. This source-publication authorization does not imply that missing evidence exists or that a YouTube upload/submission occurred.

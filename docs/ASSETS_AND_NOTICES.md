@@ -14,4 +14,4 @@ Dependencies retain their upstream license files in their installed packages. Re
 
 No repository-wide license has been assigned to the user's new project without their selection. The original kit's branding provenance does not establish trademark clearance. Keep required third-party/provider UI notices in captures; the no-footer rule concerns RallyRoom's authored interface and presentation.
 
-No external source publication, paid API use, public deployment, YouTube upload or challenge submission occurred during this build.
+The user authorized public GitHub source publication on October 25, 2026. Required dependency/asset disclosures stay in this file; RallyRoom’s authored UI, overlay, diagrams and video graphics have no footer attribution. No paid API use, public application deployment, YouTube upload or challenge submission occurred.
