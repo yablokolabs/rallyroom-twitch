@@ -14,3 +14,10 @@ Videowright; FFmpeg edits recorded footage and adds narration and timed captions
 Created review-scope and reused rescue-intro. Render-safety review: large text,
 one waitForNext per segment, deterministic WAAPI entrance, no video autoplay,
 external embeds or runtime data. Disclosure remains substantive body content.
+
+### 2026-10-25 — logo correction
+User asked why the logo was absent from README/video. Reused the supplied full
+wordmark in the shared rescue-intro, retaining eight seconds and the existing
+narration/caption alignment. No footage, evidence disclosures or ending changed.
+Render-safety review: static imported image, large text, one waitForNext and a
+WAAPI entrance; no autoplay or external asset fetch.

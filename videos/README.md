@@ -9,7 +9,7 @@ npm run dev
 npm run render:intro
 ```
 
-The intro is an eight-second authored opening graphic. The demo preview explicitly says genuine capture is pending. Neither is evidence of real Twitch use. See [capture/edit instructions](../docs/DEMO.md).
+The intro is an eight-second authored opening graphic using the supplied full RallyRoom logo. The demo preview explicitly says genuine capture is pending. Neither is evidence of real Twitch use. See [capture/edit instructions](../docs/DEMO.md).
 
 After reviewed Twitch/OBS and actual Codex recordings exist, prepare `media/manifest.json` from the example and run `npm run assemble`. It creates only a local review MP4 and refuses missing footage or a duration above three minutes. The genuine-footage gate is silent. The separate local review includes narration/captions and explicitly uses simulation. No upload command is present.
 

@@ -1,7 +1,7 @@
 {
   "artifact": "docs/media/rallyroom-local-review.mp4",
-  "sha256": "76e2bab7da9b9ce1db64cec78721fb4502d95f7ed925022de5d2283e4234fb74",
-  "verifiedAt": "2026-10-25T11:31:33.415468+00:00",
+  "sha256": "982cf7d5a3e02b03f4baa35de2e4f97dffa38cc399ea431595e53f7ae5c68382",
+  "verifiedAt": "2026-10-25T11:59:13.069305+00:00",
   "probe": {
     "programs": [],
     "streams": [
@@ -18,7 +18,7 @@
     ],
     "format": {
       "duration": "118.000000",
-      "size": "5296343"
+      "size": "5443594"
     }
   },
   "classification": "actual OBS output of local simulation, not live Twitch proof",
@@ -34,10 +34,12 @@
   "checks": [
     "full FFmpeg video/audio decode: no errors",
     "118s duration, 1080p H.264 + AAC",
-    "24 distributed frame samples inspected; no password popup in clean take",
-    "email/workspace privacy masks inspected",
-    "edit ranges fit actual finalized sources",
-    "76 unit/adapter/API tests passed; prior 3 browser scenarios passed"
+    "24 distributed frame samples and full-size logo opening inspected",
+    "decoded narration SHA-256 exactly matches the previous published video",
+    "email/workspace privacy masks retained and inspected",
+    "Videowright typecheck and 497-frame graphics render passed",
+    "prior application record: 76 unit/adapter/API tests and 3 browser scenarios passed; no runtime changes"
   ],
-  "youtubeUploadedByAgent": false
+  "youtubeUploadedByAgent": false,
+  "revision": "Supplied full RallyRoom logo added to the opening; narration/captions and evidence disclosure retained"
 }

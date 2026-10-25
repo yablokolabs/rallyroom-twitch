@@ -81,7 +81,7 @@ npm run render:local-review
 ffprobe -v error -show_entries format=duration,size -of json out/rallyroom-local-review.mp4
 ```
 
-Videowright authors/renders the opening and evidence disclosure. FFmpeg trims,
+Videowright authors/renders the opening with the supplied full RallyRoom logo and the evidence disclosure. FFmpeg trims,
 changes speed, assembles the real capture clips, adds measured captions and
 normalizes the local narration. Gameplay cuts and speed changes are labeled.
 The review renderer asserts duration, dimensions and audio presence, and never

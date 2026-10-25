@@ -1,5 +1,9 @@
 # RallyRoom
 
+<p align="center">
+  <img src="assets/rallyroom-logo.png" alt="RallyRoom — One chat. One mission." width="720">
+</p>
+
 One chat. One mission. Viewers cooperate on a three-minute rescue: scouts reveal a route, builders bridge the crossing, and engineers power the beacon. A local dashboard controls the mission; OBS displays a read-only browser overlay.
 
 **Working local product.** The deterministic engine, simulation, dashboard, overlay, persistence and Twitch OAuth/EventSub implementation are present. Automated tests cover the local and mocked-provider paths. Actual OBS output of a simulated rescue and the main Codex `/status` are captured. A narrated 1:58 local review is available in the build workspace; genuine Twitch validation and the final live demo still need a consenting channel.

@@ -107,3 +107,11 @@ Hindsight sanitized milestone operation f50cb59e-6d37-473a-9ddb-bd95f761d7b6 ver
 Media commit `6d94dbebc53f11c2cc8796f0801d5da320825203` pushed successfully to https://github.com/yablokolabs/rallyroom-twitch on main. GitHub API confirms public visibility; remote/main matched that local commit. Downloaded docs/media/rallyroom-local-review.mp4 anonymously from the public raw URL: exactly 5,296,343 bytes and SHA-256 matches the verified local artifact. Captions and README download link included. Working tree was clean before this verification note.
 
 User handles YouTube upload; no agent upload or submission. Source publication and narrated simulation review are complete. Genuine Twitch authorization/live-channel proof remains pending and is explicitly disclosed in the video, README and evidence. Capture-only OBS/display/app processes stopped. No unrelated process or edit changed.
+
+## 2026-10-25T11:59:13.069305+00:00 · logo added to README and video
+
+User: “why not use logo in the README and video too?” Starting Git state clean at 8996cc9. The earlier text-only opening omitted the supplied logo. Added assets/rallyroom-logo.png to the README header and imported the same unmodified full wordmark into the shared Videowright rescue-intro on a light background. No footer or attribution strip.
+
+Video typecheck and actual 497-frame review-graphics render passed. Re-exported the full review: 118.000 seconds, 1920×1080 H.264/AAC, 5,443,594 bytes. Full video/audio decode passed; decoded narration SHA-256 exactly matches the earlier published video. Inspected 24 distributed frames and full-size opening. Captions, simulated scope, original Codex capture/privacy masks and genuine OBS simulation footage retained. Updated intro evidence PNG and media hash receipt. No application code changed or app tests rerun for this presentation-only change.
+
+Current video SHA-256: 982cf7d5a3e02b03f4baa35de2e4f97dffa38cc399ea431595e53f7ae5c68382. README asset path verified against the existing tracked PNG. Public source/video push remains authorized by the user; YouTube remains their action. Genuine Twitch validation is still pending. Hindsight checkpoint accepted as operation 539de6ce-904f-4215-814c-a090c2249a10; completion not yet verified.
