@@ -1,20 +1,35 @@
 ## Inspiration
-Live viewers can participate in something richer than majority voting. RallyRoom explores interdependent roles and quick catch-up for late joiners. User validation is pending.
+
+A chat room can do more together than vote for one option. RallyRoom explores a small cooperative rescue in which one role opens the next role's task. We wanted someone arriving mid-round to understand how to help from the overlay. Streamer and viewer validation is still pending.
 
 ## What it does
-Planned Twitch chat cooperative rescue mission with scout/build/charge actions, streamer controls and an OBS overlay. No running application yet.
+
+RallyRoom runs a three-minute mission with scouts, builders and engineers. Exact chat commands reveal a route, build a bridge and power a rescue beacon. The owner controls the mission from an authenticated local dashboard; delegated controllers can pause or resume. A read-only OBS browser page shows progress, time and late-join instructions. Simulation and generated-fixture replay have explicit labels.
+
+The local product works. The read-only Twitch OAuth/EventSub adapter is implemented and tested with mocked provider responses. We have not yet verified real Twitch commands or OBS output on a consenting channel.
 
 ## How we built it
-Main implementation must use OpenAI Codex. Planned TypeScript reducer, authorized EventSub chat adapter, local Node server and React overlay. Record actual session ID and executed contributions as built; no runtime LLM needed.
+
+We used OpenAI Codex for the application implementation in session `01a16f7e-4c97-70f1-81b9-46b2c4e2e308`, verified from the supported session interface. Codex wrote the pure TypeScript reducer, exact command grammar, clock adapter, OAuth refresh/validation, reconnect handling, local authorization, persistence, React dashboard, illustrated SVG overlay and tests.
+
+The local Node process owns game state and receives Twitch events over an outbound WebSocket. Zod checks input schemas. The server stores a bounded journal with pseudonymous actions and snapshots. The browser receives aggregate state. No runtime LLM or bot chat sending is involved.
 
 ## Challenges we ran into
-No application failures observed yet. Capture real OAuth, reconnection, event deduplication and overlay issues with their fixes during implementation.
+
+Token identity, chat transport and dashboard permissions need separate checks. We added client/broadcaster/scope validation and numeric controller allowlists instead of trusting names. During review, we caught the cookie mismatch between localhost and 127.0.0.1 in OAuth callbacks and tightened development static serving so private files cannot fall through to the application.
+
+Tests also exposed two mistaken test assumptions: the URL parser normalizes the default secure port, and Node fetch did not send the overridden Host header used in a rebinding test. We corrected the tests to check a nondefault port and use a raw HTTP request. Delayed token-request tests also exposed old requests affecting a newer grant; the checks now cover disconnect and reauthorization while requests remain pending. Videowright's first export failed because its output directory was absent; the render script now creates it.
 
 ## Accomplishments that we're proud of
-Kit and generated branding complete. No successful live Twitch round or scalability result claimed. Replace with actual proof before submission.
+
+A complete simulated rescue runs through the dashboard and overlay. Automated checks exercise duplicates, cooldowns, prerequisites, small groups, late joining, pause, token refresh/revocation, socket recovery, crash recovery and view-only access. Browser tests capture the simulation at desktop, compact overlay and mobile sizes. A synthetic engine benchmark records deterministic results at 10, 100 and 500 fixture actors; it does not establish Twitch throughput or unique-person fairness.
+
+We created architecture HTML/SVG/PNG using diagram-design and rendered an opening graphic with Videowright. Genuine Twitch/OBS capture and the final ≤3-minute public demo remain unfinished.
 
 ## What we learned
-Planning separates gameplay authority from untrusted chat and simulated fixtures from real integration. Update with actual tests and streamer feedback.
+
+An unexpected connection gap has to be visible to players. The game pauses, reconnects and requires the controller to resume; it cannot reconstruct messages Twitch did not deliver. A generated fixture can test that behavior, but only a consenting live session can establish that the integration works with real chat and that viewers understand the game.
 
 ## What's next for RallyRoom
-Build the narrow game in Codex, verify real authorized Twitch play, record a public <=3-minute demo and prepare complete source/run instructions. Confirm individual eligibility and final rules.
+
+Authorize a consenting test channel, run two short rounds and ask the streamer about join clarity, fun and distraction. Record actual Twitch/OBS behavior and the main Codex session, then finish the short demo. Confirm individual eligibility and full challenge rules before submission. No participant study, retention improvement or revenue impact is claimed.

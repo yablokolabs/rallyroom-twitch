@@ -10,9 +10,13 @@ export class TwitchError extends Error {
 }
 export class TwitchAuth {
   private tokens: Tokens | null = null;
-  private refreshing: Promise<void> | null = null;
+  private refreshing: { version: number; promise: Promise<void> } | null = null;
+  private credentialVersion = 0;
   constructor(readonly config: TwitchConfig, private tokenPath: string, private fetcher: typeof fetch = fetch) {
-    if (existsSync(tokenPath)) this.tokens = TokensSchema.parse(JSON.parse(readFileSync(tokenPath, 'utf8')));
+    if (existsSync(tokenPath)) {
+      try { this.tokens = TokensSchema.parse(JSON.parse(readFileSync(tokenPath, 'utf8'))); }
+      catch { throw new Error('Invalid private token file. Remove that file and authorize again.'); }
+    }
   }
   configured(): boolean { return Boolean(this.config.clientId && this.config.clientSecret && /^\d+$/.test(this.config.broadcasterId) && this.config.consent); }
   hasToken(): boolean { return this.tokens !== null; }
@@ -22,8 +26,7 @@ export class TwitchAuth {
   }
   authorizeUrl(state: string, purpose: 'chat' | 'control'): string {
     if (!this.config.clientId || !this.config.clientSecret || (purpose === 'chat' && !this.configured())) throw new TwitchError('unconfigured');
-    const q = new URLSearchParams({ response_type: 'code', client_id: this.config.clientId, redirect_uri: this.config.redirectUri, state, force_verify: 'true' });
-    if (purpose === 'chat') q.set('scope', 'user:read:chat');
+    const q = new URLSearchParams({ response_type: 'code', client_id: this.config.clientId, redirect_uri: this.config.redirectUri, state, force_verify: 'true', scope: purpose === 'chat' ? 'user:read:chat' : '' });
     return 'https://id.twitch.tv/oauth2/authorize?' + q;
   }
   async identity(accessToken: string) {
@@ -32,6 +35,7 @@ export class TwitchAuth {
     if (!r.ok) throw new TwitchError('unavailable');
     const id = IdentitySchema.safeParse(await r.json());
     if (!id.success || id.data.client_id !== this.config.clientId) throw new TwitchError('wrong-identity');
+    if (id.data.expires_in <= 0) throw new TwitchError('revoked');
     return id.data;
   }
   private async exchange(form: URLSearchParams): Promise<Tokens> {
@@ -44,35 +48,50 @@ export class TwitchAuth {
     return tokens.data;
   }
   async redeem(code: string, purpose: 'chat' | 'control') {
+    const version = this.credentialVersion;
     const tokens = await this.exchange(new URLSearchParams({ grant_type: 'authorization_code', code, redirect_uri: this.config.redirectUri }));
     const id = await this.identity(tokens.access_token);
+    if (version !== this.credentialVersion) throw new TwitchError('revoked');
     if (purpose === 'control') {
       if (id.user_id !== this.config.broadcasterId && !this.config.controlIds.includes(id.user_id)) throw new TwitchError('wrong-identity');
       return { role: id.user_id === this.config.broadcasterId ? 'owner' as const : 'moderator' as const, accessToken: tokens.access_token };
     }
     this.assertBroadcaster(id);
-    atomicWrite(this.tokenPath, JSON.stringify(tokens)); this.tokens = tokens;
+    atomicWrite(this.tokenPath, JSON.stringify(tokens)); this.tokens = tokens; this.credentialVersion++;
     return { role: 'owner' as const, accessToken: tokens.access_token };
   }
   private assertBroadcaster(id: z.infer<typeof IdentitySchema>) {
     if (id.user_id !== this.config.broadcasterId || !id.scopes.includes('user:read:chat') || !this.config.consent) throw new TwitchError('wrong-identity');
   }
   private async refresh(): Promise<void> {
-    if (this.refreshing) return this.refreshing;
-    this.refreshing = (async () => {
+    const version = this.credentialVersion;
+    if (this.refreshing?.version === version) return this.refreshing.promise;
+    const promise: Promise<void> = (async () => {
       if (!this.tokens) throw new TwitchError('revoked');
       const tokens = await this.exchange(new URLSearchParams({ grant_type: 'refresh_token', refresh_token: this.tokens.refresh_token }));
       this.assertBroadcaster(await this.identity(tokens.access_token));
-      atomicWrite(this.tokenPath, JSON.stringify(tokens)); this.tokens = tokens;
-    })().finally(() => { this.refreshing = null; });
-    return this.refreshing;
+      if (version !== this.credentialVersion) throw new TwitchError('revoked');
+      atomicWrite(this.tokenPath, JSON.stringify(tokens)); this.tokens = tokens; this.credentialVersion++;
+    })().finally(() => { if (this.refreshing?.promise === promise) this.refreshing = null; });
+    this.refreshing = { version, promise };
+    return promise;
   }
   async validate(): Promise<void> {
     if (!this.configured() || !this.tokens) throw new TwitchError('unconfigured');
-    try { this.assertBroadcaster(await this.identity(this.tokens.access_token)); }
+    const version = this.credentialVersion;
+    try {
+      const identity = await this.identity(this.tokens.access_token);
+      if (version !== this.credentialVersion) { if (this.tokens) return this.validate(); throw new TwitchError('revoked'); }
+      this.assertBroadcaster(identity);
+    }
     catch (e) {
+      if (version !== this.credentialVersion) { if (this.tokens) return this.validate(); throw new TwitchError('revoked'); }
       if (e instanceof TwitchError && e.code === 'revoked') {
-        try { await this.refresh(); } catch (failure) { if (failure instanceof TwitchError && ['revoked', 'wrong-identity'].includes(failure.code)) this.forget(); throw failure; }
+        try { await this.refresh(); } catch (failure) {
+          if (version !== this.credentialVersion && this.tokens) return this.validate();
+          if (version === this.credentialVersion && failure instanceof TwitchError && ['revoked', 'wrong-identity'].includes(failure.code)) this.forget();
+          throw failure;
+        }
       } else throw e;
     }
   }
@@ -94,5 +113,5 @@ export class TwitchAuth {
     if (!body.success) throw new TwitchError('subscription-failed');
     return body.data.data[0].id;
   }
-  forget() { this.tokens = null; rmSync(this.tokenPath, { force: true }); }
+  forget() { this.credentialVersion++; this.tokens = null; rmSync(this.tokenPath, { force: true }); }
 }

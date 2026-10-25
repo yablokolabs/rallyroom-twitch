@@ -1,0 +1,12 @@
+{
+  "consentingChannelCapture": false,
+  "codexSessionVerified": false,
+  "privateDataReviewed": false,
+  "clips": [
+    { "file": "twitch-obs.mp4", "start": 0, "duration": 20, "purpose": "setup" },
+    { "file": "twitch-obs.mp4", "start": 20, "duration": 70, "purpose": "real commands and overlay" },
+    { "file": "twitch-obs.mp4", "start": 90, "duration": 25, "purpose": "late join and connection recovery" },
+    { "file": "codex-build.mp4", "start": 0, "duration": 30, "purpose": "actual main session and build" },
+    { "file": "twitch-obs.mp4", "start": 115, "duration": 12, "purpose": "real recap and limits" }
+  ]
+}

@@ -4,6 +4,7 @@ import { parseCommand } from '../../../../packages/game/src/commands.js';
 import { catchUp, initialState, publicState, reduce } from '../../../../packages/game/src/reducer.js';
 import type { Input, Mode, State } from '../../../../packages/game/src/schema.js';
 import { Journal, type AcceptedEvent } from '../storage/store.js';
+import { missionFixture } from '../../../../fixtures/scenarios/mission.js';
 export type TransportStatus = 'simulation' | 'offline' | 'connecting' | 'connected' | 'reconnecting' | 'revoked' | 'replay';
 export class Room {
   state: State;
@@ -15,10 +16,15 @@ export class Room {
   private clock: GameClock;
   private listeners = new Set<() => void>();
   private rates = new Map<string, { at: number; count: number }>();
-  constructor(readonly mode: Mode, private journal: Journal, private salt: string) {
+  private replayIndex = 0;
+  private replayInputs = missionFixture();
+  private storageFailed = false;
+  constructor(readonly mode: Mode, private journal: Journal, private salt: string, private retentionDays = 7) {
     const saved = journal.load();
     this.state = saved?.state.mode === mode ? saved.state : initialState(randomUUID(), mode);
+    if (mode === 'replay') this.state = initialState('fixture-northstar', 'replay');
     this.events = saved?.state.mode === mode ? saved.events : [];
+    if (mode === 'replay') this.events = [];
     this.clock = new GameClock(this.state.atMs);
     this.status = mode === 'simulation' ? 'simulation' : mode === 'replay' ? 'replay' : 'offline';
     if (this.state.phase === 'running') {
@@ -31,8 +37,12 @@ export class Room {
   snapshot() { return { state: publicState(this.state), transport: this.status, gap: this.gap }; }
   subscribe(listener: () => void): () => void { this.listeners.add(listener); return () => this.listeners.delete(listener); }
   private publish() { this.listeners.forEach(fn => fn()); }
-  private persist() { this.journal.save({ state: this.state, events: this.events, savedAt: new Date().toISOString() }); }
+  private persist() {
+    this.events = this.events.filter(event => Date.now() - Date.parse(event.timestamp) <= this.retentionDays * 86400000);
+    this.journal.save({ state: this.state, events: this.events, savedAt: new Date().toISOString() });
+  }
   private apply(input: Input) {
+    if (this.storageFailed) return { state: this.state, accepted: false, reason: 'storage-unavailable' };
     const result = reduce(this.state, input);
     const oldState = this.state, oldEvents = this.events;
     this.state = result.state;
@@ -46,11 +56,18 @@ export class Room {
       this.events = [...this.events, record].slice(-2000);
     }
     try { if (result.state !== oldState) this.persist(); }
-    catch (error) { this.state = oldState; this.events = oldEvents; throw error; }
+    catch (error) {
+      this.storageFailed = true; this.events = oldEvents;
+      this.state = { ...oldState, paused: true, pauseReason: 'Storage unavailable. Restart after checking local storage.', seq: oldState.seq + 1 };
+      this.publish(); throw error;
+    }
     if (result.accepted || oldState.phase !== this.state.phase) this.publish();
     return result;
   }
-  tick() { if (this.state.phase === 'running' && !this.state.paused) this.apply({ kind: 'tick', atMs: this.clock.now() }); }
+  tick() {
+    if (this.mode === 'replay') { const input = this.replayInputs[this.replayIndex++]; if (input) this.apply(input); return; }
+    if (this.state.phase === 'running' && !this.state.paused) this.apply({ kind: 'tick', atMs: this.clock.now() });
+  }
   control(action: 'start' | 'pause' | 'resume' | 'reset' | 'recap') {
     if (this.mode === 'replay') return { accepted: false, reason: 'replay-read-only' };
     if (this.mode === 'live' && ['start', 'resume'].includes(action) && this.status !== 'connected') return { accepted: false, reason: 'connect-twitch-first' };
@@ -84,8 +101,11 @@ export class Room {
     this.publish();
   }
   clearHistory() {
-    this.state = initialState(randomUUID(), this.mode, this.clock.now(), this.state.seq + 1);
+    const state = initialState(this.mode === 'replay' ? 'fixture-northstar' : randomUUID(), this.mode, this.mode === 'replay' ? 0 : this.clock.now(), this.state.seq + 1);
+    this.journal.clear({ state, events: [], savedAt: new Date().toISOString() });
+    this.state = state;
     this.events = []; this.rates.clear(); this.gap = false; this.roundOpenedAt = Date.now(); this.startedAt = null;
-    this.journal.clear({ state: this.state, events: [], savedAt: new Date().toISOString() }); this.publish();
+    this.replayIndex = 0; this.storageFailed = false;
+    this.publish();
   }
 }

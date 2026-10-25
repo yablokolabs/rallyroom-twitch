@@ -1,0 +1,10 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { missionFixture } from '../fixtures/scenarios/mission.js';
+import { initialState, publicState, reduce } from '../packages/game/src/reducer.js';
+const inputs = missionFixture();
+let state = initialState('fixture-northstar', 'simulation');
+const outcomes = inputs.map(input => { const r = reduce(state, input); state = r.state; return { accepted: r.accepted, reason: r.reason }; });
+if (state.phase !== 'success' || outcomes.some(r => !r.accepted)) throw new Error('Simulation fixture failed');
+mkdirSync('.data', { recursive: true, mode: 0o700 });
+writeFileSync('.data/simulation-replay.json', JSON.stringify({ source: 'generated-fixture', initial: initialState('fixture-northstar', 'replay'), inputs }, null, 2), { mode: 0o600 });
+console.log(JSON.stringify({ label: 'SIMULATION — generated inputs, virtual clock, no Twitch connection', accepted: outcomes.length, state: publicState(state), replay: '.data/simulation-replay.json' }, null, 2));

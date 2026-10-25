@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-10-25T06:32:31.935Z",
+  "label": "Local production startup and browser checks. Live mode deliberately unconfigured; no Twitch/OBS evidence.",
+  "results": [
+    {
+      "mode": "simulation",
+      "productionEntry": true,
+      "httpResources": "4/4",
+      "unauthorizedControl": 401,
+      "browserErrors": 0,
+      "modeLabel": "SIMULATION · LOCAL FIXTURES"
+    },
+    {
+      "mode": "live",
+      "productionEntry": true,
+      "httpResources": "4/4",
+      "unauthorizedControl": 401,
+      "browserErrors": 0,
+      "modeLabel": "TWITCH · OFFLINE"
+    },
+    {
+      "mode": "replay",
+      "productionEntry": true,
+      "httpResources": "4/4",
+      "unauthorizedControl": 401,
+      "browserErrors": 0,
+      "modeLabel": "REPLAY · GENERATED FIXTURE",
+      "generatedFixture": "success"
+    }
+  ]
+}

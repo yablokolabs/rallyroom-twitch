@@ -19,3 +19,45 @@ Next: implement deterministic engine, simulation fixture, persistent server and 
 ## 2026-10-24T20:11:08.829644+00:00 · implementation checkpoint
 
 Engine, private bounded journal, authenticated local HTTP controls, read-only WebSocket snapshots, Twitch OAuth/EventSub adapter, React dashboard and illustrated SVG overlay implemented. `npm run typecheck` passed. Dependency install: 53 packages, audit reports 0 vulnerabilities. No runtime/browser/live proof yet. Mode: simulation implementation; live adapter unverified against real Twitch. No credentials supplied. Next: engine/adapter/API/browser tests, replay fixtures and visual inspection.
+
+## 2026-10-25T06:30:40.566351+00:00 · resumed verification checkpoint
+
+User prompt: resume. Main branch; base committed implementation 9bc5d93, supplied kit baseline 7f46b84. Continuing the same main Codex build thread. Preserved existing application/test/docs/media work.
+
+- [x] M1 deterministic engine, generated fixtures, dashboard and overlay implemented; complete simulated browser rescue observed.
+- [ ] M0 real Twitch app/auth verification (session/scaffold complete; channel credentials absent).
+- [ ] M2 live verification (OAuth/EventSub/control/recovery implementation and mocked tests exist).
+- [ ] M3 genuine Twitch/OBS proof and pilot.
+- [ ] M4 final demo/submission (architecture and opening graphic complete; final footage absent).
+
+Completed checks before resume: 67 unit/adapter/API tests; production build; two simulated browser scenarios; synthetic engine benchmark; architecture HTML/SVG/PNG inspection; 8.000-second 1080p Videowright opening. The third browser check had failed on a missing private path returning SPA HTML, without observed secret disclosure.
+
+Current task tracker: RED reproduced missing-private-path behavior with a real HTTP test; supporting read-only test-quality review completed; GREEN early server filesystem boundary now passes the targeted browser regression and typecheck. Disabled Vite's unused WebSocket listener. Follow-up RED tests reproduced interrupted first journal write, cleared replay failing to restart, and clear-history disk failure mutating memory; minimal fixes implemented, verification running.
+
+Optional tooling: systematic-debugging and Ponytail local skills read/applied. TDD skill requested a test-quality subagent; nori-task-runner was not exposed, so one read-only supporting Codex review used the available collaboration interface. Main implementation remains this thread. Hindsight health reverified healthy. No global agent configuration changed.
+
+Twitch variables/project .env remain absent; OBS and DISPLAY remain unavailable. Mode: local simulation and generated replay only; provider tests synthetic/mocked. No live/capture result or final video/upload claimed. Next: finish checks, verify production startup, checkpoint and commit.
+
+## 2026-10-25T06:40:14.870303+00:00 · local product verification complete
+
+Branch main; implementation base commit 9bc5d93, kit baseline 7f46b84. Main Codex session `01a16f7e-4c97-70f1-81b9-46b2c4e2e308` remains authoritative; one supporting read-only test review, no delegated code changes. Current changes will be committed as the verification milestone; see git log for the resulting hash.
+
+- [x] M1 working deterministic mission, simulation, generated replay, dashboard and overlay.
+- [x] Local portions of M0/M2: session/runtime inventory, OAuth/EventSub implementation, authenticated controls, persistence, reconnect/revocation handling and mocked-provider tests.
+- [ ] M0/M2 external verification: own Twitch app, consenting broadcaster authorization and real chat pipeline.
+- [ ] M3 genuine Twitch/OBS proof, participant/pilot observations.
+- [ ] M4 final <=3-minute demo/public link and submission; diagram, source/run docs, story and rendered opening are ready.
+
+Exact final checks: 74 unit/adapter/API tests passed; all 3 Playwright browser tests passed in 1.1 min; TypeScript/Vite production build passed; simulation 15 accepted fixture inputs / 11 contributions / success; production startup/browser checks for three explicit modes passed with zero runtime errors and unauthenticated controls 401; generated replay succeeded, unconfigured live stayed offline; smoke passed on the local dev server. Root and isolated video audits: zero reported vulnerabilities. Video typecheck and actual 8.000-second 1080p intro render passed. Architecture self-check, SVG/PNG export and visual inspection complete. No browser snapshot implies OBS or real Twitch evidence.
+
+Relevant artifacts: docs/evidence/README.md, production-smoke.json, synthetic-evaluation.json, labeled simulation PNGs; docs/architecture/rallyroom-architecture.html/.svg/.png; videos/out/intro.mp4 (ignored local render), evidence/videowright-intro.png. Session evidence: docs/evidence/codex-session.json. Full checks/corrections: CODEX_BUILD_LOG.md. Hindsight bank verified; final milestone retention pending completion check below.
+
+Blockers: project .env/Twitch variables → absent registered app credentials and consenting broadcaster → configure on the user's workstation per TWITCH_SETUP.md; graphics/OBS → OBS and DISPLAY absent → genuine capture on a consenting graphical workstation; video → source recordings absent → capture Twitch/OBS plus this main Codex thread and `/status`, then assemble per DEMO.md. Audio preference remains unconfirmed; only a silent opening and captions-only assembly preparation exist. No existing narration credentials inspected.
+
+One next action: configure the consenting broadcaster's Twitch application locally, then authorize read-chat from the dashboard. No public deployment, posting, paid service, upload or submission performed.
+
+### 2026-10-25T06:46:16.450427+00:00 · credential-race follow-up
+
+The supporting reviewer reproduced a second stale-refresh race after disconnect/reauthorization. Two additional failing regressions confirmed that an old shared refresh could clear a newer grant and a late concurrent 401 could misclassify refreshed credentials as revoked. Bound the shared promise to its credential version, made cleanup affect only its own promise, and revalidate current credentials when an earlier request is superseded. The controller authorization URL now includes an explicit empty scope parameter, matching the required OAuth parameter without requesting chat permissions. Final full unit/adapter/API suite: **76 passed**. Production build passed. Browser scenarios remain **3 passed**; relevant source/UI unchanged by the OAuth follow-up. No genuine Twitch grant or provider behavior claimed from these synthetic tests.
+
+Hindsight status at 2026-10-25T06:46:16.450427+00:00: sanitized milestone accepted as operation `0bd3528f-ce36-4297-9020-37ca35e41707`, status `completed`. The request described the earlier 74-test checkpoint; this file records the newer 76-test result. No completed-retention claim for a pending operation.

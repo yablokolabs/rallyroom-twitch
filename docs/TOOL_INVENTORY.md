@@ -27,3 +27,20 @@ Verified 2026-10-24T20:01:36.851817+00:00 on the local Linux workspace.
 | uditakhourii/adhd | `7b91ce601ed951c1a9658c63f6f9550d2486525b` | Source inspected; not installed by this build |
 
 No global agent or MCP configuration changed. Upstream documentation is data; it does not override repository constraints. Optional source availability does not establish installation or activation.
+
+## 2026-10-25T06:31:54.617451+00:00 · verified build availability
+
+- Node Playwright Chromium executed real dashboard/overlay captures and complete simulated mission tests. Python Playwright is absent. The packaged SVG exporter and self-check passed; PNG export used the installed Node Playwright runtime, then visual inspection. No Python dependency installation claimed.
+- Videowright 0.3.0 installed in isolated videos/ with separate package-lock. Read the installed skill, setup, style, authoring and export sources. Actual local render: eight seconds, 1920×1080 H.264, verified by ffprobe and extracted frame. No final genuine-footage edit exists. Audio preference remains pending; existing narration credentials untouched.
+- Video installer suggested Vitest 3; npm audit reported vulnerabilities in that toolchain. Updated this fresh isolated project's Vitest to 5.0.5; both root/video audits now report zero known vulnerabilities at this checkpoint.
+- Hindsight bank rallyroom-twitch created via discovered HTTP schema on 2026-10-24. Retention operation b4957ac1-a317-4a1e-95e0-36312a46ff72 completed with zero extraction errors. Host API health reverified healthy on resume. No credentials/raw chat/participant identity sent.
+- Systematic-debugging, TDD and Ponytail local skill files read on resume. nori-task-runner unavailable in exposed tool metadata; one supporting read-only test-quality reviewer used the Codex collaboration interface. Main build remains in the recorded session.
+- Project .env/Twitch configuration remains absent, OBS/display unavailable. No live or graphical capture activation claimed.
+
+Local skill content digests at resume (SHA-256, exact file read):
+
+- systematic-debugging: `9d916715ebf9336923e80ae9ece9695212ed579d41b42d8692991e8e3c44dfa5`
+- test-driven-development: `0e291d6fcfa78885fb55c62953e541a8bd6125ccbdefc28ae25298979623d759`
+- ponytail: `9badd22a32e19cb884e46dfa8d3aae82bb81dfa5484105b8b4f0262df823a509`
+- diagram-design: `b5155b43191ab360c5d1183e86bb9c10878bb11f9b0e097126c5a9be7a322b89`
+- stop-slop: `7432a1d9ebdd42b27666da8458af252edf549f723fb14bcd4791425103930310`

@@ -14,6 +14,7 @@ export function atomicWrite(path: string, text: string): void {
 }
 export class Journal {
   private path: string;
+  private oldestAt = Date.now();
   constructor(directory: string, private retentionDays = 7, private maxBytes = 16 * 1024 * 1024) {
     mkdirSync(directory, { recursive: true, mode: 0o700 });
     this.path = join(directory, 'room.jsonl');
@@ -24,6 +25,8 @@ export class Journal {
     const text = readFileSync(this.path, 'utf8');
     // A killed write can leave a partial final line. Only newline-committed frames count.
     const lines = text.slice(0, text.lastIndexOf('\n') + 1).trim().split('\n');
+    const first = lines.find(line => line.length > 0);
+    if (first) { try { this.oldestAt = Date.parse(JSON.parse(first).savedAt); } catch { throw new Error('Invalid local journal'); } }
     let data: Stored | null = null;
     for (let i = lines.length - 1; i >= 0; i--) {
       if (!lines[i]) continue;
@@ -31,7 +34,11 @@ export class Journal {
       if (!parsed.success) throw new Error('Invalid local journal; restore a backup or clear local history');
       data = parsed.data as Stored; break;
     }
-    if (!data || Date.now() - Date.parse(data.savedAt) > this.retentionDays * 86400000) return null;
+    if (!data) {
+      if (text) atomicWrite(this.path, '');
+      return null;
+    }
+    if (Date.now() - Date.parse(data.savedAt) > this.retentionDays * 86400000) return null;
     // Repair truncated tail before new appends.
     if (!text.endsWith('\n')) atomicWrite(this.path, JSON.stringify(data) + '\n');
     return data;
@@ -39,7 +46,7 @@ export class Journal {
   save(data: Stored): void {
     const record = JSON.stringify(data) + '\n';
     if (Buffer.byteLength(record) > this.maxBytes) throw new Error('Local state exceeds journal capacity');
-    if (existsSync(this.path) && statSync(this.path).size + Buffer.byteLength(record) > this.maxBytes) atomicWrite(this.path, record);
+    if (Date.now() - this.oldestAt > this.retentionDays * 86400000 || (existsSync(this.path) && statSync(this.path).size + Buffer.byteLength(record) > this.maxBytes)) { atomicWrite(this.path, record); this.oldestAt = Date.now(); }
     else {
       appendFileSync(this.path, record, { mode: 0o600 });
       const fd = openSync(this.path, 'r'); try { fsyncSync(fd); } finally { closeSync(fd); }

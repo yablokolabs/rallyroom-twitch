@@ -1,0 +1,56 @@
+{
+  "label": "SYNTHETIC ENGINE MICROBENCHMARK. No network, persistence, browser, Twitch or unique-person fairness measurements.",
+  "timestamp": "2026-10-24T20:21:17.318Z",
+  "runtime": "v22.23.3",
+  "hardware": {
+    "cpu": "AMD EPYC 7452 32-Core Processor",
+    "logicalCpus": 4,
+    "totalMemoryGiB": 15.61,
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "rows": [
+    {
+      "actors": 10,
+      "samples": 20,
+      "processed": 860,
+      "acceptedPerSample": 22,
+      "duplicateRejectionsPerSample": 21,
+      "doubleCounted": 0,
+      "deterministic": true,
+      "elapsedMs": 8.475,
+      "processedPerSecond": 101473,
+      "p50Ms": 0.0057,
+      "p95Ms": 0.0139,
+      "finalStateSha256": "476c8fd9bd8b45e23db44116618fa46344b9cc410dac31fc1877640beba099a0"
+    },
+    {
+      "actors": 100,
+      "samples": 20,
+      "processed": 4460,
+      "acceptedPerSample": 112,
+      "duplicateRejectionsPerSample": 111,
+      "doubleCounted": 0,
+      "deterministic": true,
+      "elapsedMs": 70.583,
+      "processedPerSecond": 63188,
+      "p50Ms": 0.0127,
+      "p95Ms": 0.0307,
+      "finalStateSha256": "85f5c94f5cdb43f57423df3c13c555c295261e624abc0877fe709c95f978a0e2"
+    },
+    {
+      "actors": 500,
+      "samples": 20,
+      "processed": 20460,
+      "acceptedPerSample": 512,
+      "duplicateRejectionsPerSample": 511,
+      "doubleCounted": 0,
+      "deterministic": true,
+      "elapsedMs": 1184.209,
+      "processedPerSecond": 17277,
+      "p50Ms": 0.039,
+      "p95Ms": 0.1606,
+      "finalStateSha256": "bb378d6dc88c5148dff053188512d290c5e9fbe34afe5a308451e08725215707"
+    }
+  ]
+}

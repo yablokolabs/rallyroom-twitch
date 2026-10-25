@@ -7,7 +7,7 @@ const Session = z.object({ session: z.object({ id: z.string().min(1).max(512), k
 const Chat = z.object({ subscription: z.object({ id: z.string(), type: z.literal('channel.chat.message'), version: z.literal('1'), condition: z.object({ broadcaster_user_id: z.string(), user_id: z.string() }) }), event: z.object({ broadcaster_user_id: z.string(), chatter_user_id: z.string().regex(/^\d+$/), message_id: z.string().min(1).max(128), message: z.object({ text: z.string().max(2000) }) }) });
 export function reconnectUrl(value: unknown): string | null {
   if (typeof value !== 'string' || value.length > 4096) return null;
-  try { const u = new URL(value); return u.protocol === 'wss:' && u.hostname === 'eventsub.wss.twitch.tv' && !u.username && !u.password && !u.port && u.pathname === '/ws' ? value : null; } catch { return null; }
+  try { const u = new URL(value); return u.protocol === 'wss:' && u.hostname === 'eventsub.wss.twitch.tv' && !u.username && !u.password && !u.port && !u.hash ? value : null; } catch { return null; }
 }
 /** Only this module converts authenticated provider messages into game input. */
 export function ingestNotification(raw: unknown, room: Room, broadcasterId: string, subscriptionId: string, now = Date.now()) {
@@ -33,16 +33,21 @@ export class EventSub {
   private validation: ReturnType<typeof setInterval> | null = null;
   private subscriptionId = '';
   private stopped = true;
+  private generation = 0;
   private failures = 0;
   constructor(private auth: TwitchAuth, private room: Room, private onRevoke: () => void, private socketFactory: (url: string) => Socket = url => new WebSocket(url, { maxPayload: 65536, handshakeTimeout: 10000, followRedirects: false })) {}
   async start() {
-    this.stop(); this.stopped = false; this.room.transport('connecting');
-    try { await this.auth.validate(); if (!this.stopped) this.open('wss://eventsub.wss.twitch.tv/ws', false); }
-    catch (e) { this.failed(e); return; }
-    this.validation = setInterval(() => { void this.auth.validate().catch(e => this.failed(e)); }, 60 * 60 * 1000);
+    const replacingConnection = this.active !== null;
+    this.stop(); const generation = this.generation;
+    this.stopped = false; this.room.transport('connecting', replacingConnection);
+    try { await this.auth.validate(); }
+    catch (e) { if (generation === this.generation) this.failed(e); return; }
+    if (this.stopped || generation !== this.generation) return;
+    this.open('wss://eventsub.wss.twitch.tv/ws', false);
+    this.validation = setInterval(() => { void this.auth.validate().catch(e => { if (generation === this.generation) this.failed(e); }); }, 60 * 60 * 1000);
   }
   stop() {
-    this.stopped = true;
+    this.stopped = true; this.generation++;
     if (this.retry) clearTimeout(this.retry); this.retry = null;
     if (this.validation) clearInterval(this.validation); this.validation = null;
     for (const c of [this.active, this.pending]) if (c) { if (c.timeout) clearTimeout(c.timeout); c.socket.terminate(); }
@@ -57,7 +62,7 @@ export class EventSub {
     const c: Connection = { socket: this.socketFactory(url), welcomed: false, timeout: null, keepalive: 10000, migrating };
     if (migrating) this.pending = c; else this.active = c;
     this.arm(c, 10000);
-    c.socket.on('message', (data: WebSocket.RawData) => { void this.message(c, data).catch(e => this.failed(e)); });
+    c.socket.on('message', (data: WebSocket.RawData) => { void this.message(c, data).catch(e => { if (c === this.active || c === this.pending) this.failed(e); }); });
     c.socket.on('error', () => { /* close or watchdog handles connection failure; never log provider payloads */ });
     c.socket.on('close', () => {
       if (c.timeout) clearTimeout(c.timeout);
@@ -104,7 +109,11 @@ export class EventSub {
     const fatal = error instanceof TwitchError && ['revoked', 'wrong-identity', 'unconfigured'].includes(error.code);
     const delay = error instanceof TwitchError && error.retryAfterMs ? error.retryAfterMs : Math.min(30000, 1000 * 2 ** Math.min(this.failures++, 5));
     this.stop();
-    if (fatal) { this.auth.forget(); this.room.transport('revoked', true); this.onRevoke(); return; }
+    if (fatal) {
+      this.onRevoke();
+      try { this.room.transport('revoked', true); } finally { this.auth.forget(); }
+      return;
+    }
     this.room.transport('reconnecting', true); this.stopped = false;
     this.retry = setTimeout(() => { void this.start(); }, delay);
   }

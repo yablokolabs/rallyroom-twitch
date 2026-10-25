@@ -22,8 +22,9 @@ function json(res: ServerResponse, status: number, payload: unknown) { res.write
 const Control = z.object({ action: z.enum(['start', 'pause', 'resume', 'reset', 'recap']) }).strict();
 const Simulate = z.object({ actor: z.enum(['scout-1', 'builder-1', 'engineer-1', 'late-joiner']), text: z.string().max(40), roundId: z.string().max(80) }).strict();
 export async function createApp(cfg: Config, options: { vite?: boolean; twitchAuth?: TwitchAuth } = {}) {
-  const journal = new Journal(cfg.directory, cfg.retentionDays);
-  const room = new Room(cfg.mode, journal, cfg.salt);
+  const roomKey = cfg.mode === 'live' ? `live-${cfg.twitch.broadcasterId || 'unconfigured'}` : cfg.mode;
+  const journal = new Journal(join(cfg.directory, 'rooms', roomKey), cfg.retentionDays);
+  const room = new Room(cfg.mode, journal, cfg.salt, cfg.retentionDays);
   const sessions = new Sessions();
   const auth = options.twitchAuth ?? new TwitchAuth(cfg.twitch, join(cfg.directory, 'twitch-tokens.json'));
   const oauth = new Map<string, { binding: string; expires: number; purpose: 'chat' | 'control' }>();
@@ -38,6 +39,7 @@ export async function createApp(cfg: Config, options: { vite?: boolean; twitchAu
   }
   const hosts = new Set([`127.0.0.1:${cfg.port}`, `localhost:${cfg.port}`]);
   const origins = new Set([...hosts].map(h => `http://${h}`));
+  const publicDirectories = [resolve('apps/web'), resolve('assets'), resolve('node_modules')];
   function checkHost(req: IncomingMessage) { if (!hosts.has(req.headers.host ?? '')) throw new HttpError(403, 'Invalid host'); }
   function checkOrigin(req: IncomingMessage) { if (!origins.has(req.headers.origin ?? '')) throw new HttpError(403, 'Same-origin request required'); }
   async function authorize(req: IncomingMessage, owner = false) {
@@ -50,9 +52,12 @@ export async function createApp(cfg: Config, options: { vite?: boolean; twitchAu
       try { const identity = await auth.identity(token); if (identity.user_id !== cfg.twitch.broadcasterId && !cfg.twitch.controlIds.includes(identity.user_id)) throw new Error('removed'); }
       catch { sessions.end(s.id); controlTokens.delete(s.id); throw new HttpError(401, 'Twitch control authorization expired; sign in again'); }
     }
+    if (sessions.get(req)?.id !== s.id) throw new HttpError(401, 'Control session ended');
     return s;
   }
-  function oauthStart(res: ServerResponse, purpose: 'chat' | 'control') {
+  function oauthStart(req: IncomingMessage, res: ServerResponse, purpose: 'chat' | 'control') {
+    const callbackOrigin = new URL(cfg.twitch.redirectUri).origin;
+    if (req.headers.origin !== callbackOrigin) throw new HttpError(409, `Open the dashboard at ${callbackOrigin} before authorizing Twitch. The callback must use the same host.`);
     for (const [id, item] of oauth) if (item.expires < Date.now()) oauth.delete(id);
     if (oauth.size >= 16) throw new HttpError(429, 'Too many authorization attempts');
     const state = randomBytes(32).toString('hex'), binding = randomBytes(32).toString('hex');
@@ -77,6 +82,11 @@ export async function createApp(cfg: Config, options: { vite?: boolean; twitchAu
     res.setHeader('Content-Security-Policy', `default-src 'self'; script-src 'self'${cfg.production ? '' : " 'unsafe-inline'"}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' ws://localhost:${cfg.port} ws://127.0.0.1:${cfg.port}; frame-ancestors 'none'; base-uri 'none'; form-action 'self'`);
     const url = new URL(req.url ?? '/', `http://localhost:${cfg.port}`);
     const path = url.pathname;
+    if (decodeURIComponent(path).startsWith('/.')) throw new HttpError(403, 'Private path');
+    if (path.startsWith('/@fs/')) {
+      const file = resolve(decodeURIComponent(path.slice('/@fs'.length)));
+      if (file.startsWith(cfg.directory + '/') || !publicDirectories.some(directory => file.startsWith(directory + '/'))) throw new HttpError(403, 'Private path');
+    }
     if (req.method === 'GET' && path === '/api/health') return json(res, 200, { ok: true, mode: cfg.mode });
     if (req.method === 'GET' && path === '/api/state') return json(res, 200, room.snapshot());
     if (req.method === 'GET' && path === '/api/session') {
@@ -108,16 +118,18 @@ export async function createApp(cfg: Config, options: { vite?: boolean; twitchAu
       await authorize(req, true); room.clearHistory(); return json(res, 200, { ok: true });
     }
     if (req.method === 'POST' && path === '/api/twitch/connect' && cfg.mode === 'live') {
-      await authorize(req, true); return json(res, 200, { url: oauthStart(res, 'chat') });
+      await authorize(req, true); return json(res, 200, { url: oauthStart(req, res, 'chat') });
     }
     if (req.method === 'POST' && path === '/api/twitch/reconnect' && cfg.mode === 'live') {
       await authorize(req, true); rate('connect', 3, 60000); await eventsub.start(); return json(res, 200, { ok: true });
     }
     if (req.method === 'POST' && path === '/api/twitch/disconnect' && cfg.mode === 'live') {
-      await authorize(req, true); eventsub.stop(); auth.forget(); room.transport('offline', true); sessions.revokeAll(); controlTokens.clear(); return json(res, 200, { ok: true });
+      await authorize(req, true); eventsub.stop(); sessions.revokeAll(); controlTokens.clear(); oauth.clear();
+      try { room.transport('offline', true); } finally { auth.forget(); }
+      return json(res, 200, { ok: true });
     }
     if (req.method === 'POST' && path === '/auth/twitch/control') {
-      checkOrigin(req); rate('oauth', 5, 60000); return json(res, 200, { url: oauthStart(res, 'control') });
+      checkOrigin(req); rate('oauth', 5, 60000); return json(res, 200, { url: oauthStart(req, res, 'control') });
     }
     if (req.method === 'GET' && path === '/auth/twitch/callback') {
       const state = url.searchParams.get('state') ?? '', pending = oauth.get(state); oauth.delete(state);
@@ -161,7 +173,10 @@ export async function createApp(cfg: Config, options: { vite?: boolean; twitchAu
   }, 1000);
   if (options.vite) {
     const { createServer: createVite } = await import('vite');
-    vite = await createVite({ server: { middlewareMode: true, hmr: false, allowedHosts: ['localhost', '127.0.0.1'] }, appType: 'spa' });
+    vite = await createVite({ server: {
+      middlewareMode: true, hmr: false, ws: false, allowedHosts: ['localhost', '127.0.0.1'],
+      fs: { strict: true, allow: publicDirectories, deny: ['.env', '.env.*', '**/.data/**', `${cfg.directory}/**`, '**/apps/server/**', '**/*.pem', '**/*.key'] },
+    }, appType: 'spa' });
   }
   return {
     server, room, sessions, auth, eventsub,
