@@ -44,3 +44,9 @@ Local skill content digests at resume (SHA-256, exact file read):
 - ponytail: `9badd22a32e19cb884e46dfa8d3aae82bb81dfa5484105b8b4f0262df823a509`
 - diagram-design: `b5155b43191ab360c5d1183e86bb9c10878bb11f9b0e097126c5a9be7a322b89`
 - stop-slop: `7432a1d9ebdd42b27666da8458af252edf549f723fb14bcd4791425103930310`
+
+## 2026-10-25 · actual media runtime update
+
+OBS Studio 30.0.2.1-3build1, bundled obs-websocket 5.3.4, Xvfb, xterm and xdotool now installed/executed for local capture. Actual XSHM program recording of headed Chromium completed a generated fixture round. Native Browser source plugin absent; Docker and live Twitch setup unchanged. Authenticated OBS control used a private random password and isolated configuration.
+
+Main Codex CLI /status now genuinely captured, original session ID confirmed, email masked in public evidence. Local British female Kokoro bf_emma narration and actual Whisper timing generated in ignored isolated tooling. Exact model/package provenance and media limitations are in MEDIA_REVIEW.md. ElevenLabs audition returned payment_required; no audio or paid plan. Videowright rendered both opening and explicit evidence disclosure; FFmpeg assembles the simulation review. No YouTube upload.

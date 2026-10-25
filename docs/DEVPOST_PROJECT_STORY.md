@@ -6,7 +6,7 @@ A chat room can do more together than vote for one option. RallyRoom explores a 
 
 RallyRoom runs a three-minute mission with scouts, builders and engineers. Exact chat commands reveal a route, build a bridge and power a rescue beacon. The owner controls the mission from an authenticated local dashboard; delegated controllers can pause or resume. A read-only OBS browser page shows progress, time and late-join instructions. Simulation and generated-fixture replay have explicit labels.
 
-The local product works. The read-only Twitch OAuth/EventSub adapter is implemented and tested with mocked provider responses. We have not yet verified real Twitch commands or OBS output on a consenting channel.
+The local product works. The read-only Twitch OAuth/EventSub adapter is implemented and tested with mocked provider responses. We recorded actual OBS output of a local simulated rescue. Real Twitch commands on a consenting channel remain unverified.
 
 ## How we built it
 
@@ -24,7 +24,7 @@ Tests also exposed two mistaken test assumptions: the URL parser normalizes the 
 
 A complete simulated rescue runs through the dashboard and overlay. Automated checks exercise duplicates, cooldowns, prerequisites, small groups, late joining, pause, token refresh/revocation, socket recovery, crash recovery and view-only access. Browser tests capture the simulation at desktop, compact overlay and mobile sizes. A synthetic engine benchmark records deterministic results at 10, 100 and 500 fixture actors; it does not establish Twitch throughput or unique-person fairness.
 
-We created architecture HTML/SVG/PNG using diagram-design and rendered an opening graphic with Videowright. Genuine Twitch/OBS capture and the final ≤3-minute public demo remain unfinished.
+We created architecture HTML/SVG/PNG using diagram-design and rendered an opening graphic with Videowright. A 1:58 local review combines actual OBS simulation output, real Codex session evidence and British female narration. Genuine Twitch gameplay and the final public live demo remain unfinished.
 
 ## What we learned
 
@@ -32,4 +32,4 @@ An unexpected connection gap has to be visible to players. The game pauses, reco
 
 ## What's next for RallyRoom
 
-Authorize a consenting test channel, run two short rounds and ask the streamer about join clarity, fun and distraction. Record actual Twitch/OBS behavior and the main Codex session, then finish the short demo. Confirm individual eligibility and full challenge rules before submission. No participant study, retention improvement or revenue impact is claimed.
+Authorize a consenting test channel, run two short rounds and ask the streamer about join clarity, fun and distraction. Record actual Twitch/OBS behavior, replace the clearly labeled simulation footage and finish the live demo. The main Codex `/status` and test captures are recorded. Confirm individual eligibility and full challenge rules before submission. No participant study, retention improvement or revenue impact is claimed.

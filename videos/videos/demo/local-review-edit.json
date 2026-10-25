@@ -1,0 +1,72 @@
+{
+  "kind": "local simulation review, not a live Twitch demo",
+  "duration": 118,
+  "clips": [
+    {
+      "file": "out/review-graphics.mp4",
+      "start": 0,
+      "duration": 16.566,
+      "take": 16.566
+    },
+    {
+      "file": "media/obs-simulation.mkv",
+      "start": 7.42,
+      "duration": 13.811,
+      "take": 13.811,
+      "label": "LOCAL SIMULATION \u00b7 ACTUAL OBS OUTPUT"
+    },
+    {
+      "file": "media/obs-simulation.mkv",
+      "start": 0,
+      "duration": 11.698,
+      "take": 7.4,
+      "label": "LOCAL SIMULATION \u00b7 CONTROLLER AND OVERLAY"
+    },
+    {
+      "file": "media/obs-simulation.mkv",
+      "start": 14,
+      "duration": 13.72,
+      "take": 55,
+      "label": "LOCAL SIMULATION \u00b7 OBS \u00b7 APPROX. 4\u00d7 SPEED"
+    },
+    {
+      "file": "media/obs-simulation.mkv",
+      "start": 10.7,
+      "duration": 8.988,
+      "take": 8.988,
+      "label": "LOCAL SIMULATION \u00b7 LATE JOIN"
+    },
+    {
+      "file": "media/obs-simulation.mkv",
+      "start": 23,
+      "duration": 13.07,
+      "take": 13.07,
+      "label": "LOCAL PAUSE / RESUME \u00b7 TWITCH RECOVERY TESTS MOCKED"
+    },
+    {
+      "file": "../docs/architecture/rallyroom-architecture.png",
+      "start": 0,
+      "duration": 14.832,
+      "still": true
+    },
+    {
+      "file": "../docs/evidence/codex-status-redacted.png",
+      "start": 0,
+      "duration": 7,
+      "still": true
+    },
+    {
+      "file": "media/verification-terminal-redacted.mp4",
+      "start": 0,
+      "duration": 7.918,
+      "take": 7.918
+    },
+    {
+      "file": "media/obs-simulation.mkv",
+      "start": 67,
+      "duration": 10.397,
+      "take": 6.7,
+      "label": "LOCAL SIMULATION \u00b7 LIVE TWITCH VERIFICATION PENDING"
+    }
+  ]
+}

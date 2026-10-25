@@ -77,3 +77,27 @@ Demo checked with ffprobe: opening only, 8.000 seconds / 1920×1080 / H.264. No 
 User-authorized public source repository created and pushed: https://github.com/yablokolabs/rallyroom-twitch. GitHub `isPrivate=false`, default main; first remote main `fe9e393bb38c8bade5fee06d9efd01f99aaaaad0` exactly matched local HEAD. Origin configured, working tree clean before this documentation checkpoint. Existing authored surfaces have no footer attribution. Required asset/dependency notices remain in dedicated files. No runtime code changed or application deployed.
 
 The full demo remains unfinished: actual 8.000-second opening exists, genuine Twitch/OBS and main Codex recordings plus reviewed media manifest/final edit are absent. No YouTube upload or challenge submission performed. Next: configure own consenting broadcaster app and capture genuine workflow per TWITCH_SETUP.md/DEMO.md.
+
+## 2026-10-25T11:19:40.989567+00:00 · narrated local review milestone
+
+User prompt: “then complete and also r u using british female young voice ?” Public source authorization remains in effect. No Twitch credentials/channel grant were supplied. Asked for a consenting channel/workstation while continuing independent media work.
+
+OBS Studio 30.0.2.1 installed and actually recorded a complete local simulated rescue through headed Chromium/XSHM on an isolated Xvfb display. Source is not an OBS browser-source plugin test or live Twitch evidence. Capture includes generated actor join/late join, 11 contributions, controller pause/resume and success. Source receipt records event offsets and render drops on software rendering; not a performance benchmark.
+
+Real main Codex CLI resumed with its existing ID and `/status` displayed the same session `01a16f7e-4c97-70f1-81b9-46b2c4e2e308`. Genuine screen recording captured; email redacted in the retained screenshot. Provider UI preserved.
+
+Requested narration direction: youthful adult British female. Authorized ElevenLabs stock Beth audition returned HTTP 402 payment_required; no audio or paid plan. Switched to local Kokoro bf_emma (British female preset; speaker age unverified, adult delivery direction only). Audition 10.142s and 117.437s full narration generated. No runtime LLM or app credential changes. Timings from actual WAV paragraphs and local Whisper transcription. Final review export in progress; no final live demo or YouTube upload claimed.
+
+Next: finish captions/edit, inspect export/privacy, update media provenance, push reviewed source/docs. External requirement remains genuine authorized Twitch command ingestion capture.
+
+## 2026-10-25T11:32:22.849481+00:00 · 118-second review verified; public media authorized
+
+User steering: “i will upload to youtube u don't have to do it, just push it to the repo that's enough”. This explicitly authorizes publishing the reviewed video/captions with the source; user handles YouTube. Copied reviewed export to docs/media/rallyroom-local-review.mp4 and captions alongside it. Private originals, model weights, runtime data, credentials and build outputs remain ignored.
+
+Exact artifact: 118.000 seconds for both video/audio, 1920×1080 H.264 + AAC, 5,296,343 bytes. SHA-256 76e2bab7da9b9ce1db64cec78721fb4502d95f7ed925022de5d2283e4234fb74. Full audio/video FFmpeg decode passed without errors. Inspected 24 distributed frame samples plus full-size pause/status/test frames. Clean OBS retake has no password popup; account email and terminal workspace path masked. 36 measured subtitle cues, British female Kokoro bf_emma narration with youthful adult delivery direction. No footer attribution, music or decorative ending.
+
+Checks: 76 unit/adapter/API tests passed during the actual terminal recording; previous 3 browser scenarios remain the record for unchanged application code. Root/video typechecks, JS/Python syntax, subtitle timing assertions, actual source-range assertions and git diff whitespace passed. Actual Videowright 497-frame disclosure/opening export passed. Separate final-live assembly command correctly refuses absent genuine capture manifest. No runtime app changes in this media milestone.
+
+M1 local product complete. Local OBS/Codex capture and narrated review complete. M0/M2 real Twitch authorization and M3 live command proof still pending: no consenting channel/app grant supplied. This video repeatedly labels simulation and cannot satisfy those requirements. No participant study, native OBS Browser source verification or real Twitch recovery claim. No agent YouTube upload/submission.
+
+Hindsight sanitized milestone operation f50cb59e-6d37-473a-9ddb-bd95f761d7b6 verified completed. Next: commit/push reviewed media + current documentation to the already-public origin; see git log for resulting commit. User may download/upload the review. Capture Twitch integration separately after providing a consenting app/channel.

@@ -24,3 +24,6 @@ See docs/DEMO.md for the capture script. No participant feedback or performance 
 
 ### 2026-10-24 — preparation
 Installed Videowright 0.3.0 in isolated videos/. Read upstream install, setup, authoring and export instructions. Reused the authorized project folder, Codex workflow, npm and existing RallyRoom palette. Created opening graphic and a clearly labeled missing-footage preview. A complete demo cannot be rendered from genuine footage until that footage exists. Assembly script refuses missing or unverified inputs. Runtime application remains independent of video dependencies.
+
+### 2026-10-25 — requested voice and local review
+User requested completion and youthful adult British female narration. ElevenLabs Beth generation returned payment_required; no audio or paid plan. Local Kokoro bf_emma narration is 117.437 seconds, with an adult delivery direction (age not verified metadata). Actual OBS XSHM program output of a generated rescue and main Codex /status/test captures now exist. A separate 118-second local review uses explicit evidence disclosures, edited time, measured captions and architecture. It does not replace the pending genuine Twitch sequence or live assembly gate. Graphics are Videowright-rendered; FFmpeg edits captures and muxes audio. No upload.

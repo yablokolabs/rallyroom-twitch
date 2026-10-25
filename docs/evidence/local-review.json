@@ -1,0 +1,43 @@
+{
+  "artifact": "docs/media/rallyroom-local-review.mp4",
+  "sha256": "76e2bab7da9b9ce1db64cec78721fb4502d95f7ed925022de5d2283e4234fb74",
+  "verifiedAt": "2026-10-25T11:31:33.415468+00:00",
+  "probe": {
+    "programs": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1920,
+        "height": 1080,
+        "duration": "118.000000"
+      },
+      {
+        "codec_name": "aac",
+        "duration": "118.000000"
+      }
+    ],
+    "format": {
+      "duration": "118.000000",
+      "size": "5296343"
+    }
+  },
+  "classification": "actual OBS output of local simulation, not live Twitch proof",
+  "voice": {
+    "provider": "local Kokoro ONNX",
+    "preset": "bf_emma",
+    "language": "en-gb",
+    "direction": "youthful adult British female",
+    "speakerAgeVerified": false
+  },
+  "captions": "36 cues from measured ASR word timing, names corrected against script",
+  "codexEvidence": "actual original main CLI /status with email redaction; actual terminal test run with workspace-path mask",
+  "checks": [
+    "full FFmpeg video/audio decode: no errors",
+    "118s duration, 1080p H.264 + AAC",
+    "24 distributed frame samples inspected; no password popup in clean take",
+    "email/workspace privacy masks inspected",
+    "edit ranges fit actual finalized sources",
+    "76 unit/adapter/API tests passed; prior 3 browser scenarios passed"
+  ],
+  "youtubeUploadedByAgent": false
+}

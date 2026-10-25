@@ -6,7 +6,9 @@
     "dev": "videowright dev",
     "typecheck": "tsc --noEmit",
     "render:intro": "node scripts/render-intro.mjs",
-    "assemble": "node scripts/assemble.mjs"
+    "assemble": "node scripts/assemble.mjs",
+    "render:review-graphics": "videowright render review-graphics --fps 30 --output out/review-graphics.mp4",
+    "render:local-review": "node scripts/render-local-review.mjs"
   },
   "type": "module",
   "private": true,

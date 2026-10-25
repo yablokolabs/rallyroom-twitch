@@ -2,11 +2,13 @@
 
 One chat. One mission. Viewers cooperate on a three-minute rescue: scouts reveal a route, builders bridge the crossing, and engineers power the beacon. A local dashboard controls the mission; OBS displays a read-only browser overlay.
 
-**Working local product.** The deterministic engine, simulation, dashboard, overlay, persistence and Twitch OAuth/EventSub implementation are present. Automated tests cover the local and mocked-provider paths. Genuine Twitch/OBS validation and the final demonstration video remain pending access to a consenting channel and graphical workstation.
+**Working local product.** The deterministic engine, simulation, dashboard, overlay, persistence and Twitch OAuth/EventSub implementation are present. Automated tests cover the local and mocked-provider paths. Actual OBS output of a simulated rescue and the main Codex `/status` are captured. A narrated 1:58 local review is available in the build workspace; genuine Twitch validation and the final live demo still need a consenting channel.
 
 ![RallyRoom simulated overlay](docs/evidence/simulation-overlay.png)
 
 This screenshot shows generated local fixtures, not a live Twitch session.
+
+[Watch/download the 1:58 narrated local review](docs/media/rallyroom-local-review.mp4) · [Captions](docs/media/rallyroom-local-review.srt). British female voice with youthful adult delivery; actual OBS simulation and Codex evidence, with live Twitch validation explicitly pending.
 
 ## Run locally
 
@@ -47,7 +49,7 @@ On the same workstation as the server, add an OBS **Browser** source:
 | Compact layout | `http://localhost:3000/overlay?compact=1`, `1280` / `720` |
 | Credentials in source URL | None |
 
-OBS was not available on the build host. Browser screenshots verify page rendering, not actual OBS capture or streamed-frame readability. Do not expose the local server through a public tunnel; remote control hosting is outside this MVP.
+OBS Studio now records the local overlay through XSHM display capture of headed Chromium. The installed OBS package has no browser-source plugin; its native Browser source and real Twitch stream behavior remain unverified. Do not expose the local server through a public tunnel; remote control hosting is outside this MVP.
 
 ## Chat commands
 
@@ -90,7 +92,7 @@ npm run smoke                    # with the local server already running
 | `apps/server/src/rooms/`, `storage/` | Single game authority, pseudonyms, bounded journal and crash recovery |
 | `apps/web/src/` | React dashboard, onboarding/field guide and SVG rescue overlay |
 | `fixtures/`, `tests/`, `scripts/` | Generated scenarios, checks, simulation and measurement |
-| `videos/` | Isolated Videowright project and genuine-footage assembly preparation |
+| `videos/` | Isolated Videowright graphics, narrated local review and genuine-footage assembly gate |
 
 Chat text is untrusted data. Only exact parsed commands enter the reducer; no chat HTML, shell calls, external URLs or runtime model interpretation. The server verifies broadcaster/subscription identity, provider time, round, participant, role, phase, cooldown and both delivery/chat IDs. Duplicate retention is ten minutes or 12,000 IDs, bounded; each room admits at most 500 accounts. The transport rejects stale messages older than 30 seconds and messages predating the lobby/start boundary.
 
@@ -102,4 +104,4 @@ A restarted running mission recovers paused. Overlay reconnect gets a full snaps
 
 Main Codex session: `01a16f7e-4c97-70f1-81b9-46b2c4e2e308`, read from the supported `thread.sessionId` interface. [Build log](docs/CODEX_BUILD_LOG.md) · [progress](docs/PROGRESS.md) · [tool inventory](docs/TOOL_INVENTORY.md).
 
-The [demo runbook](docs/DEMO.md) lists the remaining genuine captures and the ≤3-minute edit. The public source repository is [yablokolabs/rallyroom-twitch](https://github.com/yablokolabs/rallyroom-twitch). The application still runs locally. The final demo, YouTube upload and challenge submission remain pending. [Project story](docs/DEVPOST_PROJECT_STORY.md), [Built With](docs/BUILT_WITH.md), and [asset/dependency notices](docs/ASSETS_AND_NOTICES.md) reflect current evidence.
+The [demo runbook](docs/DEMO.md) lists the remaining genuine captures and the ≤3-minute edit. The public source repository is [yablokolabs/rallyroom-twitch](https://github.com/yablokolabs/rallyroom-twitch). The application still runs locally. The 1:58 narrated local review is `videos/out/rallyroom-local-review.mp4` after local assembly. It uses a British female voice, explicitly labeled simulation, actual OBS output, architecture and real Codex evidence. Private source media and build exports stay untracked; the reviewed MP4 and captions are published under `docs/media/` with your authorization. The final live demo, YouTube upload and challenge submission remain pending. [Project story](docs/DEVPOST_PROJECT_STORY.md), [Built With](docs/BUILT_WITH.md), and [asset/dependency notices](docs/ASSETS_AND_NOTICES.md) reflect current evidence.

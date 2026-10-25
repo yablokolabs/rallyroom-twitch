@@ -2,6 +2,9 @@
 
 | Artifact | What it establishes | What it does not establish |
 | --- | --- | --- |
+| local-review.json / local-review-frame.png | Exact hash, duration, codecs, capture limitations and a frame from the reviewed MP4 | A live Twitch round or agent YouTube upload |
+| codex-status-redacted.png | Actual main Codex CLI `/status`, original session ID, email masked | A recreated UI or new session |
+| obs-simulation-success.png | Actual browser frame of the mission recorded by OBS through XSHM; generated actors | Real Twitch chat, viewers or native OBS Browser source |
 | codex-session.json | Supported Codex app-server `thread/read` returned the main `sessionId` | A `/status` UI/video capture |
 | simulation-dashboard.png | Actual Playwright capture of the running dashboard with synthetic inputs | Live Twitch or OBS |
 | simulation-overlay.png / simulation-success.png | Actual browser rendering and state changes in a generated fixture rescue | Broadcast output, real viewers |
