@@ -101,3 +101,9 @@ Checks: 76 unit/adapter/API tests passed during the actual terminal recording; p
 M1 local product complete. Local OBS/Codex capture and narrated review complete. M0/M2 real Twitch authorization and M3 live command proof still pending: no consenting channel/app grant supplied. This video repeatedly labels simulation and cannot satisfy those requirements. No participant study, native OBS Browser source verification or real Twitch recovery claim. No agent YouTube upload/submission.
 
 Hindsight sanitized milestone operation f50cb59e-6d37-473a-9ddb-bd95f761d7b6 verified completed. Next: commit/push reviewed media + current documentation to the already-public origin; see git log for resulting commit. User may download/upload the review. Capture Twitch integration separately after providing a consenting app/channel.
+
+## 2026-10-25T11:33:47.946276+00:00 · public video push verified
+
+Media commit `6d94dbebc53f11c2cc8796f0801d5da320825203` pushed successfully to https://github.com/yablokolabs/rallyroom-twitch on main. GitHub API confirms public visibility; remote/main matched that local commit. Downloaded docs/media/rallyroom-local-review.mp4 anonymously from the public raw URL: exactly 5,296,343 bytes and SHA-256 matches the verified local artifact. Captions and README download link included. Working tree was clean before this verification note.
+
+User handles YouTube upload; no agent upload or submission. Source publication and narrated simulation review are complete. Genuine Twitch authorization/live-channel proof remains pending and is explicitly disclosed in the video, README and evidence. Capture-only OBS/display/app processes stopped. No unrelated process or edit changed.

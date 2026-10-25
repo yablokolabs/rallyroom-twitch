@@ -65,3 +65,9 @@ Hindsight bank rallyroom-twitch health verified. Sanitized media checkpoint oper
 ### 2026-10-25T11:32:22.849481+00:00 · reviewed media publication authorization
 
 User: “i will upload to youtube u don't have to do it, just push it to the repo that's enough”. Final local review passed full FFmpeg video/audio decode, stream duration/dimension checks, 24-frame distributed visual review and full-size privacy/caption checks. Actual source ranges validated. Published copy prepared under docs/media with SRT and SHA-256 evidence receipt. 118.000 seconds / 5,296,343 bytes; no footer. This is a labeled simulated review, not real Twitch proof. Git push of this reviewed artifact is now explicitly authorized; YouTube upload remains the user's action.
+
+## 2026-10-25T11:33:47.946276+00:00 · public video push verified
+
+Media commit `6d94dbebc53f11c2cc8796f0801d5da320825203` pushed successfully to https://github.com/yablokolabs/rallyroom-twitch on main. GitHub API confirms public visibility; remote/main matched that local commit. Downloaded docs/media/rallyroom-local-review.mp4 anonymously from the public raw URL: exactly 5,296,343 bytes and SHA-256 matches the verified local artifact. Captions and README download link included. Working tree was clean before this verification note.
+
+User handles YouTube upload; no agent upload or submission. Source publication and narrated simulation review are complete. Genuine Twitch authorization/live-channel proof remains pending and is explicitly disclosed in the video, README and evidence. Capture-only OBS/display/app processes stopped. No unrelated process or edit changed.
