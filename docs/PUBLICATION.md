@@ -17,3 +17,7 @@ Latest application checks: 76 unit/adapter/API tests, 3 browser scenarios and pr
 ## Video status
 
 The local Videowright opening exists at videos/out/intro.mp4: H.264, 1920×1080, 8.000 seconds. Its extracted frame is public source evidence in docs/evidence/videowright-intro.png. The reviewed media manifest and final review MP4 do not exist. Genuine consenting Twitch/OBS and main Codex interface recordings are still needed; no final demo or YouTube link is claimed.
+
+## Verified publication result
+
+2026-10-25T10:51:33.971509+00:00: created [https://github.com/yablokolabs/rallyroom-twitch](https://github.com/yablokolabs/rallyroom-twitch) and pushed local main. GitHub reports `isPrivate=false`, default branch `main`. Remote main SHA `fe9e393bb38c8bade5fee06d9efd01f99aaaaad0` matched the local HEAD after the first push. Origin uses the credential-free HTTPS repository URL. The repository contains source and honest labeled artifacts; it does not host the running application or a final demo video.
